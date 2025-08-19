@@ -40,6 +40,7 @@ export function getLocalImagePath(cardName) {
         "August Presence": "August_Presence.png",
         "Black Mist": "Black_Mist.png",
         "Blunderbuss": "Blunderbuss.png",
+        "Buckler of Limos": "Buckler_of_limos.png",
         "Cornered Despot": "Cornered_Despot.png",
         "Courteous Jousting": "Courteous_Jousting.png",
         "Crow's Blessing": "Crow_27s_Blessing.png",
@@ -76,7 +77,7 @@ export function getLocalImagePath(cardName) {
         "Cannon Fodder": "Cannon-Fodder.png",
         "Philanthropy": "Philanthropy.png",
         "Sacred Light": "Sacred_Light.png",
-        "Ravenous Rats": "Ravenous_Rats.png",
+        "Ravenous Rats": "Ravenous-Rats.png",
         "Unholy Call": "Unholy-Call.png",
         "Undercover Mission": "Undercover-Mission.png",
         "Caltrops": "Caltrops2.png",
@@ -183,15 +184,19 @@ export function getLocalImagePath(cardName) {
         "Plumed Knight": "Plumed_Knight.jpg",
         "Reverend Mother": "Reverend_mother.png",
         "Commoner's Reign": "Commoner__27s_Reign.png",
-        "Self Defense": "Self_Defense.png",
+        "Self Defense": "Image_missing.png",//missing
         "Bouncy Castle": "Bouncy_castle.png",
         "Sokoban": "Sokoban.png",
-        "Stealthy": "Stealthy.jpg"
+        "King's Look-Alike": "King__27s_Look-Alike.png",
+        "Emergency Call": "Emergency_Call.jpg",
+        "Lady in the Tower": "Lady_in_the_Tower.png",
+        "Vampirism": "Vampirism.png",
+        "Inquisition": "Image_missing.png",//missing
     };
     
     const imageName = imageMap[cardName];
     if (imageName) {
-        return `/images/${imageName}`;
+        return `public/images/${imageName}`;
     }
     
     // Fallback to a default image if not found
@@ -1047,12 +1052,12 @@ export const cardDetails = {
         maxAmount: 1,
         requirements: "Theocracy"
     },
-    "Commoner's Reign": {
-        image: getLocalImagePath("Commoner's Reign"),
-        description: "Add 1 Knight Knights: +2 health Win if all Knights are dead Having this card and then picking Bodyguard or having Bodyguard prior to getting this card will turn it into the Self Defense card",
-        maxAmount: 1,
-        requirements: "King's Look-Alike, Undercover Mission"
-    },
+         "Commoner's Reign": {
+         image: getLocalImagePath("Commoner's Reign"),
+         description: "Add 1 Knight Knights: +2 health Win if all Knights are dead Having this card and then picking Bodyguard or having Bodyguard prior to getting this card will turn it into the Self Defense card",
+         maxAmount: 1,
+         requirements: "King's Look-Alike, Undercover Mission or The Mole"
+     },
     "Self Defense": {
         image: getLocalImagePath("Self Defense"),
         description: "Knights: +2 health",
@@ -1132,3 +1137,94 @@ export const cardDetails = {
         requirements: "Not having any other right clickable card such as any grenade card or Engraved Scope"
     }
 };
+
+// Utility function to parse card requirements and separate card prerequisites from other requirements
+export function parseCardRequirements(requirementsString) {
+    if (!requirementsString || requirementsString.trim() === "") {
+        return { cardPrerequisites: [], otherRequirements: [] };
+    }
+
+    const cardPrerequisites = [];
+    const otherRequirements = [];
+    
+    // First, handle OR conditions by splitting on "or" and then processing each part
+    const orParts = requirementsString.split(/\s+or\s+/);
+    
+    orParts.forEach(orPart => {
+        // Split each OR part by commas, semicolons, or "and"
+        const parts = orPart.split(/[,;]|\s+and\s+/);
+        
+        parts.forEach(part => {
+            const trimmed = part.trim();
+            if (!trimmed) return;
+            
+            // Check if this part is a card name (exists in allCards)
+            if (allCards.includes(trimmed)) {
+                cardPrerequisites.push(trimmed);
+            } else {
+                // Check for special cases like "2+ Rooks", "Having at least X", etc.
+                if (trimmed.includes("+") || 
+                    trimmed.includes("Having at least") || 
+                    trimmed.includes("Not having") ||
+                    trimmed.includes("x") ||
+                    trimmed.includes("blade") ||
+                    trimmed.includes("Rooks") ||
+                    trimmed.includes("Bishops") ||
+                    trimmed.includes("Knights") ||
+                    trimmed.includes("Pawns") ||
+                    trimmed.includes("Queens") ||
+                    trimmed.includes("Kings")) {
+                    otherRequirements.push(trimmed);
+                } else if (trimmed.includes("Attempting to reshuffle")) {
+                    otherRequirements.push(trimmed);
+                } else {
+                    // If it's not clearly a card and not clearly a special requirement, treat as other
+                    otherRequirements.push(trimmed);
+                }
+            }
+        });
+    });
+    
+    return { cardPrerequisites, otherRequirements };
+}
+
+// Function to get all card prerequisites for a given card
+export function getCardPrerequisites(cardName) {
+    const card = cardDetails[cardName];
+    if (!card || !card.requirements) return [];
+    
+    const { cardPrerequisites } = parseCardRequirements(card.requirements);
+    return cardPrerequisites;
+}
+
+// Function to get all other requirements for a given card
+export function getOtherRequirements(cardName) {
+    const card = cardDetails[cardName];
+    if (!card || !card.requirements) return [];
+    
+    const { otherRequirements } = parseCardRequirements(card.requirements);
+    return otherRequirements;
+}
+
+// Function to check if a card is available (prerequisites met)
+export function isCardAvailable(cardName, selectedCards) {
+    const prerequisites = getCardPrerequisites(cardName);
+    
+    if (prerequisites.length === 0) {
+        return true; // No prerequisites, always available
+    }
+    
+    // Check if any prerequisites are met (OR logic)
+    // This handles cases like "Undercover Mission or The Mole" - either one satisfies the requirement
+    return prerequisites.some(prereq => selectedCards.includes(prereq));
+}
+
+// Function to get all cards that are currently locked (prerequisites not met)
+export function getLockedCards(selectedCards) {
+    return allCards.filter(card => !isCardAvailable(card, selectedCards));
+}
+
+// Function to get all cards that are currently available (prerequisites met)
+export function getAvailableCards(selectedCards) {
+    return allCards.filter(card => isCardAvailable(card, selectedCards));
+}

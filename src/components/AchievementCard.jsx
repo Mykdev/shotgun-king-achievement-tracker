@@ -9,6 +9,7 @@ function AchievementCard({ achievement, onToggleProgress, animationDelay }) {
 
   return (
     <div
+      id={`achievement-${achievement.id}`}
       className={`achievement-card ${achievement.completed ? 'completed' : ''}`}
       style={{ animationDelay: `${animationDelay}s` }}
       onClick={handleClick}

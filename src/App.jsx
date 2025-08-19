@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { achievements } from './data/achievements';
-import { allCards, getLocalImagePath, cardDetails } from './data/cards';
+import { allCards, getLocalImagePath, cardDetails, isCardAvailable, getCardPrerequisites, getOtherRequirements } from './data/cards';
 import Header from './components/Header';
 import StatsBar from './components/StatsBar';
 import CardSelection from './components/CardSelection';
@@ -131,6 +131,7 @@ function App() {
       if (achievement.completed) return false;
       
       if (achievement.requiredCards && achievement.requiredCards.length > 0) {
+        // Only qualify if at least one required card is actually selected
         return achievement.requiredCards.some(card => selectedCards.includes(card));
       }
       return false;
@@ -170,6 +171,60 @@ function App() {
     return missingCards;
   };
 
+  // Function to get all prerequisite cards needed for achievements you qualify for
+  const getAchievementPrerequisites = () => {
+    const qualifyingAchievements = getQualifyingAchievements();
+    const prerequisiteCards = new Set();
+    
+    // Only show prerequisites if there are actually qualifying achievements
+    if (qualifyingAchievements.length === 0) {
+      return [];
+    }
+    
+    qualifyingAchievements.forEach(achievement => {
+      achievement.requiredCards.forEach(card => {
+        if (!selectedCards.includes(card) && !isCardAvailable(card, selectedCards)) {
+          // Get all prerequisites for this card
+          const prerequisites = getCardPrerequisites(card);
+          prerequisites.forEach(prereq => {
+            if (!selectedCards.includes(prereq)) {
+              prerequisiteCards.add(prereq);
+            }
+          });
+        }
+      });
+    });
+    
+    return Array.from(prerequisiteCards);
+  };
+
+  // Function to get newly unlocked achievements when selecting prerequisite cards
+  const getNewlyUnlockedAchievements = () => {
+    const newlyUnlocked = [];
+    
+    // Check each achievement to see if it just became available
+    achievementData.forEach(achievement => {
+      if (achievement.completed) return;
+      
+      if (achievement.requiredCards && achievement.requiredCards.length > 0) {
+        // Check if this achievement just became available due to newly selected cards
+        const hasNewlyAvailableCards = achievement.requiredCards.some(card => {
+          // Card is newly available if it wasn't available before but is now
+          const isNowAvailable = isCardAvailable(card, selectedCards);
+          const wasAvailableBefore = isCardAvailable(card, selectedCards.slice(0, -1)); // Check without the last selected card
+          
+          return isNowAvailable && !wasAvailableBefore;
+        });
+        
+        if (hasNewlyAvailableCards) {
+          newlyUnlocked.push(achievement);
+        }
+      }
+    });
+    
+    return newlyUnlocked;
+  };
+
   const getFilteredAchievements = () => {
     return achievementData.filter(achievement => {
       const matchesSearch = achievement.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -187,25 +242,23 @@ function App() {
   };
 
   const getFilteredCards = () => {
-    // Collect all cards required for at least one locked achievement
-    const lockedRequiredCards = new Set();
-    achievementData.forEach(achievement => {
-      if (!achievement.completed && Array.isArray(achievement.requiredCards)) {
-        achievement.requiredCards.forEach(card => lockedRequiredCards.add(card));
-      }
-    });
-
-    // Only show cards that are required for a locked achievement
-    const filteredCards = allCards.filter(card => lockedRequiredCards.has(card));
+    // Show all cards all the time
+    let filteredCards = allCards;
     
-    // Apply search filter
+    // Apply search filter if there's a search term
     if (cardSearchTerm) {
-      return filteredCards.filter(card => 
+      filteredCards = filteredCards.filter(card => 
         card.toLowerCase().includes(cardSearchTerm.toLowerCase())
       );
     }
     
-    return filteredCards;
+    // Add availability status to each card
+    return filteredCards.map(card => ({
+      name: card,
+      isAvailable: isCardAvailable(card, selectedCards),
+      prerequisites: getCardPrerequisites(card),
+      otherRequirements: getOtherRequirements(card)
+    }));
   };
 
   const stats = {
@@ -222,19 +275,21 @@ function App() {
         onClearAllProgress={clearAllProgress} 
       />
       
-      <CardSelection
-        selectedCards={selectedCards}
-        onToggleCard={toggleCardSelection}
-        onRemoveCard={removeCardSelection}
-        onClearSelection={clearCardSelection}
-        searchTerm={cardSearchTerm}
-        onSearchChange={setCardSearchTerm}
-        filteredCards={getFilteredCards()}
-        qualifyingAchievements={getQualifyingAchievements()}
-        missingCards={getMissingCards()}
-        getLocalImagePath={getLocalImagePath}
-        cardDetails={cardDetails}
-      />
+             <CardSelection
+         selectedCards={selectedCards}
+         onToggleCard={toggleCardSelection}
+         onRemoveCard={removeCardSelection}
+         onClearSelection={clearCardSelection}
+         searchTerm={cardSearchTerm}
+         onSearchChange={setCardSearchTerm}
+         filteredCards={getFilteredCards()}
+         qualifyingAchievements={getQualifyingAchievements()}
+         missingCards={getMissingCards()}
+         prerequisiteCards={getAchievementPrerequisites()}
+         newlyUnlockedAchievements={getNewlyUnlockedAchievements()}
+         getLocalImagePath={getLocalImagePath}
+         cardDetails={cardDetails}
+       />
 
       <div className="controls">
         <div className="search-box">

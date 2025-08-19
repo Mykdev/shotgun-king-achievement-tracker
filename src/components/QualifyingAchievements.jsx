@@ -1,6 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function QualifyingAchievements({ qualifyingAchievements, selectedCards }) {
+function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDetails, getLocalImagePath, onCardSelect, onCardDeselect }) {
+  const [hoveredCard, setHoveredCard] = useState(null);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+  const handleCardHover = (event, cardName) => {
+    const rect = event.target.getBoundingClientRect();
+    setTooltipPosition({
+      x: rect.left + rect.width / 2,
+      y: rect.top - 10
+    });
+    setHoveredCard(cardName);
+  };
+
+  const handleCardLeave = () => {
+    setHoveredCard(null);
+  };
+
+  const handleCardClick = (cardName) => {
+    if (onCardSelect) {
+      onCardSelect(cardName);
+    }
+  };
+
+  const handleCardRightClick = (e, cardName) => {
+    e.preventDefault();
+    if (onCardDeselect) {
+      onCardDeselect(cardName);
+    }
+  };
+
   if (selectedCards.length === 0) {
     return (
       <div className="qualifying-achievements">
@@ -76,9 +105,26 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards }) {
           
           return (
             <div key={achievement.id} className="qualifying-achievement">
-              <div className="qualifying-achievement-title" title={achievement.description}>
-                {achievement.title}
-              </div>
+                             <div 
+                 className="qualifying-achievement-title clickable-achievement" 
+                 title={`Click to scroll to ${achievement.title} in achievements section`}
+                 onClick={() => {
+                   const achievementElement = document.getElementById(`achievement-${achievement.id}`);
+                   if (achievementElement) {
+                     achievementElement.scrollIntoView({ 
+                       behavior: 'smooth', 
+                       block: 'center' 
+                     });
+                     // Add a temporary highlight effect
+                     achievementElement.classList.add('highlighted');
+                     setTimeout(() => {
+                       achievementElement.classList.remove('highlighted');
+                     }, 2000);
+                   }
+                 }}
+               >
+                 {achievement.title}
+               </div>
               
               <div className="achievement-summary">
                 {summary.completeCards.length > 0 && (
@@ -102,10 +148,15 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards }) {
                 {uniqueRequiredCards.map(card => {
                   const cardStatus = getCardStatus(achievement, card);
                   return (
-                    <span
-                      key={card}
-                      className={`qualifying-card-tag ${cardStatus.status}`}
-                    >
+                                         <span
+                       key={card}
+                       className={`qualifying-card-tag ${cardStatus.status} clickable-card`}
+                       onMouseEnter={(e) => handleCardHover(e, card)}
+                       onMouseLeave={handleCardLeave}
+                       onClick={() => handleCardClick(card)}
+                       onContextMenu={(e) => handleCardRightClick(e, card)}
+                       title={`Click to select ${card}, right-click to deselect`}
+                     >
                       {cardStatus.text}
                     </span>
                   );
@@ -115,6 +166,31 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards }) {
           );
         })}
       </div>
+      
+      {/* Tooltip */}
+      {hoveredCard && (
+        <div 
+          className="card-tooltip"
+          style={{
+            left: tooltipPosition.x,
+            top: tooltipPosition.y,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="tooltip-card-image">
+            <img 
+              src={cardDetails[hoveredCard]?.image || getLocalImagePath(hoveredCard)} 
+              alt={hoveredCard}
+              onError={(e) => {
+                e.target.src = '/images/Image_missing.png';
+              }}
+            />
+          </div>
+                     <div className="tooltip-card-info">
+             <div className="tooltip-card-name">{hoveredCard}</div>
+           </div>
+        </div>
+      )}
     </div>
   );
 }

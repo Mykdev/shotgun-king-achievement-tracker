@@ -21,6 +21,18 @@ function Footer() {
             <li>Card selection and recommendations</li>
           </ul>
         </div>
+        <div className="footer-section">
+          <h3><i className="fab fa-github"></i> Open Source</h3>
+          <p>This project is open source and available on GitHub!</p>
+          <a 
+            href="https://github.com/Mykdev/shotgun-king-achievement-tracker" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="github-link"
+          >
+            <i className="fab fa-github"></i> View on GitHub
+          </a>
+        </div>
       </div>
       <div className="footer-bottom">
         <p>&copy; 2025 Shotgun King Achievement Tracker | Fan-made tool for educational purposes</p>
