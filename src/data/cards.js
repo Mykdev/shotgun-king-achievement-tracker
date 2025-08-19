@@ -14,7 +14,7 @@ export const allCards = [
     "Indelible Memories", "Monarch's Confidence", "Tearing Bullets", "The Mole", "Fearsome",
     "Human Shield", "Reign of Terror", "Ancient Flagstone", "Patience", "Bold Plan",
     "Low-Cost Disguise", "Silencer", "Holoking", "Cloaking Device", "Ambush", "Selective Listening",
-    "Secret Move", "Workshop", "Seer's Orb",
+    "Secret Move", "Workshop", "Seer's Orb","Mystic Shackles",
     
     // White Cards
     "Ammunition Depot", "Ascension", "Assault", "Backups", "Bodyguard", "Cardinal", "Castle",
@@ -192,6 +192,7 @@ export function getLocalImagePath(cardName) {
         "Lady in the Tower": "Lady_in_the_Tower.png",
         "Vampirism": "Vampirism.png",
         "Inquisition": "Image_missing.png",//missing
+        "Mystic Shackles": "Mystic_Shackles.png",
     };
     
     const imageName = imageMap[cardName];
