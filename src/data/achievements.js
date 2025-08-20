@@ -659,11 +659,11 @@ export const achievements = [
     {
         id: "a_mighty_fortress",
         title: "A Mighty Fortress",
-        description: "Have 6+ rooks on the board at one time. Suggested Rank: 3. Cards: Ammunition Depot/Cathedral/Court of the King/Lookout Tower/Ramparts/Ruins",
+        description: "Have 6+ rooks on the board at one time. Suggested Rank: 3. Cards: Ammunition Depot/Cathedral/Court of the King/Lookout Tower/Remparts/Ruins",
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["Ammunition Depot", "Cathedral", "Court of the King", "Lookout Tower", "Ramparts", "Ruins"],
+        requiredCards: ["Ammunition Depot", "Cathedral", "Court of the King", "Lookout Tower", "Remparts", "Ruins"],
         difficulty: "Hard"
     },
     {
