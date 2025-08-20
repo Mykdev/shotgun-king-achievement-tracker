@@ -311,7 +311,7 @@ const cardDetails = {
         maxAmount: 1,
         requirements: ""
     },
-    "Wand Of Hypnosis": {
+    "Wand of Hypnosis": {
         image: "https://static.wikia.nocookie.net/shotgun-king/images/8/8e/WandofHypnosis.png/revision/latest?cb=20240413173547",
         description: "Play a white piece of your choice",
         maxAmount: 1,

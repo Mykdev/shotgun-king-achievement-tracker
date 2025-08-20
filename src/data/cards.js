@@ -533,8 +533,8 @@ export const cardDetails = {
         maxAmount: 1,
         requirements: ""
     },
-    "Wand Of Hypnosis": {
-        image: getLocalImagePath("Wand Of Hypnosis"),
+    "Wand of Hypnosis": {
+        image: getLocalImagePath("Wand of Hypnosis"),
         description: "Play a white piece of your choice",
         maxAmount: 1,
         requirements: ""
