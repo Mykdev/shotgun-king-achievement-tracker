@@ -16,7 +16,9 @@ function CardSelection({
   prerequisiteCards,
   newlyUnlockedAchievements,
   getLocalImagePath,
-  cardDetails
+  cardDetails,
+  showOnlyNeededCards,
+  onToggleShowOnlyNeededCards
 }) {
   const getSelectedCardCount = (cardName) => {
     return selectedCards.filter(card => card === cardName).length;
@@ -74,8 +76,20 @@ function CardSelection({
             onChange={(e) => onSearchChange(e.target.value)}
           />
         </div>
+        <div className="card-filter-controls">
+          <label className="card-filter-toggle">
+            <input
+              type="checkbox"
+              checked={showOnlyNeededCards}
+              onChange={onToggleShowOnlyNeededCards}
+            />
+            <span className="toggle-slider"></span>
+            <span className="toggle-label">Show only cards needed for incomplete achievements</span>
+          </label>
+        </div>
         <div className="search-stats">
           <span>{filteredCards.length}</span> cards shown
+          {showOnlyNeededCards && <span className="filter-active-indicator"> (filtered)</span>}
         </div>
       </div>
 

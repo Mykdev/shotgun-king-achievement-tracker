@@ -13,6 +13,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
   const [cardSearchTerm, setCardSearchTerm] = useState('');
+  const [showOnlyNeededCards, setShowOnlyNeededCards] = useState(false);
 
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -242,8 +243,21 @@ function App() {
   };
 
   const getFilteredCards = () => {
-    // Show all cards all the time
     let filteredCards = allCards;
+    
+    // Filter to show only cards needed for incomplete achievements if toggle is enabled
+    if (showOnlyNeededCards) {
+      const incompleteAchievements = achievementData.filter(a => !a.completed);
+      const neededCards = new Set();
+      
+      incompleteAchievements.forEach(achievement => {
+        achievement.requiredCards.forEach(card => {
+          neededCards.add(card);
+        });
+      });
+      
+      filteredCards = filteredCards.filter(card => neededCards.has(card));
+    }
     
     // Apply search filter if there's a search term
     if (cardSearchTerm) {
@@ -289,6 +303,8 @@ function App() {
          newlyUnlockedAchievements={getNewlyUnlockedAchievements()}
          getLocalImagePath={getLocalImagePath}
          cardDetails={cardDetails}
+         showOnlyNeededCards={showOnlyNeededCards}
+         onToggleShowOnlyNeededCards={() => setShowOnlyNeededCards(!showOnlyNeededCards)}
        />
 
       <div className="controls">

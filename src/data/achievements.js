@@ -1023,11 +1023,11 @@ export const achievements = [
     {
         id: "anarchy",
         title: "Anarchy",
-        description: "Have 4+ Kings on the board at one time. Use 2x King's Look-alike + 1 Secret Heir or 1 King's Look-alike + both Heir cards.",
+        description: "Have 4+ Kings on the board at one time. Use 3x King's Look-alike OR 1 Secret Heir, 1 King's Look-alike + Unsettled Throne.",
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["King's Look-alike", "The Secret Heir"],
+        requiredCards: ["King's Look-alike", "The Secret Heir", "Unsettled Throne"],
         difficulty: "Hard"
     },
     {

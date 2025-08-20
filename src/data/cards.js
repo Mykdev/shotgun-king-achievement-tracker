@@ -29,8 +29,11 @@ export const allCards = [
     "Final Countdown", "Mangonel", "Prison", "The Royal Hunt", "Buckler of Limos",
     "King's Look-Alike", "Emergency Call", "Lady in the Tower", "Vampirism", "Inquisition",
     "Tag Team", "Unsettled Throne", "Nomad Life", "Governess", "Unicorn", "Plumed Knight",
-    "Reverend Mother", "Commoner's Reign", "Self Defense", "Bouncy Castle", "Sokoban"
+    "Reverend Mother", "Commoner's Reign", "Self Defense", "Bouncy Castle", "Sokoban",
+    "Fallen Dynasty"
 ];
+
+import { getImageBasePath, getFallbackImagePath } from '../config/env.js';
 
 // Function to get local image path for a card
 export function getLocalImagePath(cardName) {
@@ -187,26 +190,43 @@ export function getLocalImagePath(cardName) {
         "Self Defense": "Image_missing.png",//missing
         "Bouncy Castle": "Bouncy_castle.png",
         "Sokoban": "Sokoban.png",
-        "King's Look-Alike": "King__27s_Look-Alike.png",
-        "Emergency Call": "Emergency_Call.jpg",
-        "Lady in the Tower": "Lady_in_the_Tower.png",
-        "Vampirism": "Vampirism.png",
-        "Inquisition": "Image_missing.png",//missing
         "Mystic Shackles": "Mystic_Shackles.png",
         "Elusive": "Elusive.jpg",
         "Taunting Hop": "Taunting_Hop.png",
+        "Fallen Dynasty": "Fallen_Dynasty.png",
     };
     
     const imageName = imageMap[cardName];
     if (imageName) {
-        return `public/images/${imageName}`;
+        // Use environment-aware base path
+        const imagePath = getImageBasePath() + imageName;
+        
+        // Log image path for debugging (only in development)
+        if (import.meta.env.DEV) {
+            console.log(`🖼️ Image path for "${cardName}":`, imagePath);
+        }
+        
+        return imagePath;
     }
     
     // Fallback to a default image if not found
-    return "/images/Image_missing.png";
+    const fallbackPath = getFallbackImagePath();
+    
+    // Log fallback usage for debugging (only in development)
+    if (import.meta.env.DEV) {
+        console.log(`⚠️ No image mapping found for "${cardName}", using fallback:`, fallbackPath);
+    }
+    
+    return fallbackPath;
 }
 
 export const cardDetails = {
+    "Fallen Dynasty": {
+        image: getLocalImagePath("Fallen Dynasty"),
+        description: "They ruled a long time ago... But royalty shall prevail",
+        maxAmount: 1,
+        requirements: "Theocracy, The Red Book"
+    },
     "Ancient Flagstone": {
         image: getLocalImagePath("Ancient Flagstone"),
         description: "Adds a Flagstone to the board. You can always move to this square no matter how far you are from it",
@@ -1137,7 +1157,7 @@ export const cardDetails = {
         image: getLocalImagePath("Seer's Orb"),
         description: "+1 Search Right Click: Click a piece to have the orb hover above it The orb predicts the piece's movement",
         maxAmount: 1,
-        requirements: "Not having any other right clickable card such as any grenade card or Engraved Scope"
+        requirements: "Not having any other right clickable card such as any grenade card."
     }
 };
 

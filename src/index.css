@@ -422,6 +422,71 @@ body {
     gap: 20px;
 }
 
+.card-filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.card-filter-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.card-filter-toggle input[type="checkbox"] {
+    display: none;
+}
+
+.toggle-slider {
+    position: relative;
+    width: 50px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.card-filter-toggle input[type="checkbox"]:checked + .toggle-slider {
+    background: rgba(74, 222, 128, 0.3);
+    border-color: rgba(74, 222, 128, 0.5);
+}
+
+.card-filter-toggle input[type="checkbox"]:checked + .toggle-slider::before {
+    transform: translateX(26px);
+    background: #4ade80;
+}
+
+.toggle-label {
+    font-size: 14px;
+    color: #b0b0b0;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.card-filter-toggle:hover .toggle-slider {
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.card-filter-toggle:hover .toggle-label {
+    color: #ffffff;
+}
+
 .card-search-box {
     position: relative;
     flex: 1;
@@ -467,6 +532,12 @@ body {
 .search-stats span {
     color: #ffd700;
     font-weight: 600;
+}
+
+.filter-active-indicator {
+    color: #4ade80 !important;
+    font-size: 0.8em;
+    font-weight: 500;
 }
 
 .card-grid {
@@ -1597,6 +1668,14 @@ body {
         flex-direction: column;
         align-items: stretch;
         gap: 15px;
+    }
+
+    .card-filter-controls {
+        justify-content: center;
+    }
+
+    .toggle-label {
+        font-size: 13px;
     }
 
     .card-search-box {

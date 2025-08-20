@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getFallbackImagePath } from '../config/env.js';
 
 function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDetails, getLocalImagePath, onCardSelect, onCardDeselect }) {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -182,7 +183,7 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDet
               src={cardDetails[hoveredCard]?.image || getLocalImagePath(hoveredCard)} 
               alt={hoveredCard}
               onError={(e) => {
-                e.target.src = '/images/Image_missing.png';
+                                        e.target.src = getFallbackImagePath();
               }}
             />
           </div>

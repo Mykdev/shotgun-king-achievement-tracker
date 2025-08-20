@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getFallbackImagePath } from '../config/env.js';
 
 function MissingCardsSummary({ missingCards, cardDetails, getLocalImagePath, onCardSelect, onCardDeselect }) {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -78,9 +79,9 @@ function MissingCardsSummary({ missingCards, cardDetails, getLocalImagePath, onC
             <img 
               src={cardDetails[hoveredCard]?.image || getLocalImagePath(hoveredCard)} 
               alt={hoveredCard}
-              onError={(e) => {
-                e.target.src = '/images/Image_missing.png';
-              }}
+                             onError={(e) => {
+                                         e.target.src = getFallbackImagePath();
+               }}
             />
           </div>
                      <div className="tooltip-card-info">

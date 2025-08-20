@@ -56,4 +56,8 @@ node_modules/
 
 # Temporary files
 *.tmp
-*.temp 
+*.temp
+
+# Build output
+dist/
+docs/ 
