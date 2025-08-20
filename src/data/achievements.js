@@ -445,7 +445,7 @@ export const achievements = [
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["Wand of Downpour", "Wand of Frenzy", "Wand of Gust", "Wand of Wings", "Wand of Wrath", "Wand of Souls", "Wand of Execution", "Wand Of Hypnosis",],
+        requiredCards: ["Wand of Downpour", "Wand of Frenzy", "Wand of Gust", "Wand of Wings", "Wand of Wrath", "Wand of Souls", "Wand of Execution", "Wand of Hypnosis",],
         difficulty: "Medium"
     },
     {
