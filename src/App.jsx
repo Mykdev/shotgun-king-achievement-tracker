@@ -151,6 +151,11 @@ function App() {
     
     // Check each qualifying achievement for missing cards
     qualifyingAchievements.forEach(achievement => {
+      // Extra safety check - qualifying achievements should have requiredCards, but just in case
+      if (!achievement.requiredCards || !Array.isArray(achievement.requiredCards)) {
+        return;
+      }
+      
       const requiredCardCounts = {};
       achievement.requiredCards.forEach(card => {
         requiredCardCounts[card] = (requiredCardCounts[card] || 0) + 1;
@@ -183,6 +188,11 @@ function App() {
     }
     
     qualifyingAchievements.forEach(achievement => {
+      // Extra safety check - qualifying achievements should have requiredCards, but just in case
+      if (!achievement.requiredCards || !Array.isArray(achievement.requiredCards)) {
+        return;
+      }
+      
       achievement.requiredCards.forEach(card => {
         if (!selectedCards.includes(card) && !isCardAvailable(card, selectedCards)) {
           // Get all prerequisites for this card
@@ -251,9 +261,12 @@ function App() {
       const neededCards = new Set();
       
       incompleteAchievements.forEach(achievement => {
-        achievement.requiredCards.forEach(card => {
-          neededCards.add(card);
-        });
+        // Only process achievements that have requiredCards property
+        if (achievement.requiredCards && Array.isArray(achievement.requiredCards)) {
+          achievement.requiredCards.forEach(card => {
+            neededCards.add(card);
+          });
+        }
       });
       
       filteredCards = filteredCards.filter(card => neededCards.has(card));
