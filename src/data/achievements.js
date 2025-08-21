@@ -103,7 +103,7 @@ export const achievements = [
     {
         id: "deleted",
         title: "Deleted",
-        description: "Finish a floor by turn 6. Amass firepower, get rook/queen soul, use soul to get close and shoot directly for king.",
+        description: "Finish a floor by turn 6.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -113,7 +113,7 @@ export const achievements = [
     {
         id: "square_allegiance",
         title: "Square Allegiance",
-        description: "Finish a floor without moving to a white tile. Best done on Stage 1 where bishop starts on white square.",
+        description: "Finish a floor without moving to a white tile.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -122,7 +122,7 @@ export const achievements = [
     {
         id: "incarnation",
         title: "Incarnation",
-        description: "Finish a floor moving only with souls. Can be done without moving at all if pieces come to you.",
+        description: "Finish a floor moving only with souls. Can be done without moving at all.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -131,7 +131,7 @@ export const achievements = [
     {
         id: "projectile_dysfunction",
         title: "Projectile Dysfunction",
-        description: "Have more ammo in your clip than in your max reserves. Use Victoria/Ramesses II shotgun with chamber size/max ammo differential.",
+        description: "Have more ammo in your clip than in your max reserves.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -141,7 +141,7 @@ export const achievements = [
     {
         id: "hope_this_hits",
         title: "Hope This Hits",
-        description: "Have an arc of 120 or higher. Use Ramesses II/Richard III shotgun with two Blunderbusses or Blunderbuss and Karma on black square.",
+        description: "Have an arc of 120 or higher.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -151,7 +151,7 @@ export const achievements = [
     {
         id: "nine_lives",
         title: "Nine Lives",
-        description: "Activate black mist 9 times. Need Black Mist early, restart if not found by Stage 4. Trigger every stage.",
+        description: "Activate black mist 9 times.",
         progress: 0,
         maxProgress: 9,
         completed: false,
@@ -161,7 +161,7 @@ export const achievements = [
     {
         id: "you_shall_not_pass",
         title: "You Shall Not Pass",
-        description: "Beat Throne mode without letting any pawn promote. Kill all pawns or blitz king before pawns reach your end.",
+        description: "Beat Throne mode without letting any pawn promote.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -170,7 +170,7 @@ export const achievements = [
     {
         id: "blitz",
         title: "Blitz",
-        description: "Beat Throne mode in less than 5 minutes. Should be standard in Rank 1 once comfortable with the game.",
+        description: "Beat Throne mode in less than 5 minutes.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -179,7 +179,7 @@ export const achievements = [
     {
         id: "oh_no",
         title: "Oh No!",
-        description: "Get killed by your own grenade. Throw grenade one space away for no bounce and guaranteed death.",
+        description: "Get killed by your own grenade.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -189,7 +189,7 @@ export const achievements = [
     {
         id: "lifeguard",
         title: "Lifeguard",
-        description: "Push a piece out of the moat. Use Ramesses II shotgun (50% knockback) or Rightful Curtsy.",
+        description: "Push a piece out of the moat. Knockback is required.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -441,7 +441,7 @@ export const achievements = [
     {
         id: "wizard",
         title: "Wizard",
-        description: "Have 3 Magic Wands. Collect any three out of the 8 available wands (doesn't require winning).",
+        description: "Have 3 Magic Wands. Collect any three.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -461,7 +461,7 @@ export const achievements = [
     {
         id: "exorcised",
         title: "Exorcised",
-        description: "Kill The Red Book. Need The Red Book and Theocracy cards, keep exactly one bishop alive when killing the King.",
+        description: "Kill The Red Book. Same as Avenged, but have at least one extra shell loaded when killing the black bishop.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -621,7 +621,7 @@ export const achievements = [
     {
         id: "how_it_should_be",
         title: "How It Should Be",
-        description: "Have 2 knights, 2 rooks, 2 bishops, 1 queen, 1 king, and 8 pawns on the enemy field. Aim for piece-adding cards until hitting minimum numbers.",
+        description: "Have 2 knights, 2 rooks, 2 bishops, 1 queen, 1 king, and 8 pawns on the enemy field. Get a lot of pieces on the board and then kill extra pieces.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -630,7 +630,7 @@ export const achievements = [
     {
         id: "she_is_everywhere",
         title: "She Is Everywhere",
-        description: "Have 5+ queens on the board at one time. Need pawn to queen promotions. Cards: Genderqueer/Golden Aging/Iron Maiden/King's Mistress/Presbyopia/Succubus.",
+        description: "Have 5+ queens on the board at one time.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -640,7 +640,7 @@ export const achievements = [
     {
         id: "mortal_peril",
         title: "Mortal Peril",
-        description: "Be threatened by 4 pieces at once. You'll probably get this naturally on higher ranks.",
+        description: "Be threatened by 4 pieces at once.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -649,7 +649,7 @@ export const achievements = [
     {
         id: "your_wife_my_wife",
         title: "Your Wife My Wife",
-        description: "Grab the queen and carry her to the square you started the round on. Let queen get within grabbing range.",
+        description: "Grab the queen and carry her to the square you started the round on.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -659,7 +659,7 @@ export const achievements = [
     {
         id: "a_mighty_fortress",
         title: "A Mighty Fortress",
-        description: "Have 6+ rooks on the board at one time. Suggested Rank: 3. Cards: Ammunition Depot/Cathedral/Court of the King/Lookout Tower/Remparts/Ruins",
+        description: "Have 6+ rooks on the board at one time.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -669,7 +669,7 @@ export const achievements = [
     {
         id: "underpressure_ammo",
         title: "Underpressure Ammo",
-        description: "Have a firepower equal to 1. Use Makeda/Richard III shotgun with two firepower reduction cards.",
+        description: "Have a firepower equal to 1. Use Makeda or Richard III shotgun with two firepower reduction cards.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -679,7 +679,7 @@ export const achievements = [
     {
         id: "gluttony",
         title: "Gluttony",
-        description: "Have 20+ ammo. Aim for Kingdom Wealth (+6) and two Ermine Belts (+3 each). Richard III shotgun helps.",
+        description: "Have 20+ ammo.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -689,7 +689,7 @@ export const achievements = [
     {
         id: "iron_king",
         title: "Iron King",
-        description: "Beat Throne mode without using a folly shield. Set Folly Shield count to 0 prior to attempting.",
+        description: "Beat Throne mode without using a folly shield. Set Folly Shield count to 0 prior to start.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -698,7 +698,7 @@ export const achievements = [
     {
         id: "widow",
         title: "Widow",
-        description: "Beat Throne mode without killing a queen. Debuff queen or rush Iron Maiden. Undercover Mission can deactivate Homecoming.",
+        description: "Beat Throne mode without killing a queen.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -708,7 +708,7 @@ export const achievements = [
     {
         id: "bullet",
         title: "Bullet",
-        description: "Beat Throne mode in less than 2 minutes. Set Folly Shield count to 3, avoid cards that alter standard gameplay mechanics.",
+        description: "Beat Throne mode in less than 2 minutes.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -717,7 +717,7 @@ export const achievements = [
     {
         id: "suicide_pact",
         title: "Suicide Pact",
-        description: "Destroy the last leader and the black king with a grenade. Get enemy king to 2 or less HP, throw grenade one space away.",
+        description: "Destroy the white king (before the last floor) and the black king with a grenade.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -965,7 +965,7 @@ export const achievements = [
     {
         id: "marital_peace",
         title: "Marital Peace",
-        description: "Kill the Blight. Requires The Blight achievement to be triggered first.Summon the Blight by having exactly 1 queen with Iron Maiden when killing the White King. Iron Maiden requires 2 queens to spawn and removes 1 queen. Avoid cards that add more queens.",
+        description: "Kill the Blight. Summon the Blight by having 1 queen with Iron Maiden when killing the White King.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -975,7 +975,7 @@ export const achievements = [
     {
         id: "end_of_the_world",
         title: "End Of The World",
-        description: "Kill The Four Horsemen of the Apocalypse. Requires exactly 4 knights alive when killing the White King. Military Academy helps if too few knights. Avoid Nomad Life as it promotes knights.",
+        description: "Kill The Four Horsemen of the Apocalypse. Requires exactly 4 knights alive when killing the White King.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -1003,7 +1003,7 @@ export const achievements = [
     {
         id: "hippocracy",
         title: "Hippocracy",
-        description: "Disable King's Look-Alike with sabotage card (Undercover Mission/The Mole) before revealing the Usurper. Damage remaining king to reveal Usurper, letting knights rule. Not guaranteed - can try multiple times per run.",
+        description: "Disable King's Look-Alike with sabotage card (Undercover Mission/The Mole) before revealing the Usurper. Damage remaining king to reveal Usurper, letting knights rule.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -1013,7 +1013,7 @@ export const achievements = [
     {
         id: "bloodbath",
         title: "Bloodbath",
-        description: "Have 12+ bleeding pieces on the board at one time. Use Tearing Bullets and cards that spawn many pawns.",
+        description: "Have 12+ bleeding pieces on the board at one time. Use Tearing Bullets.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -1043,7 +1043,7 @@ export const achievements = [
     {
         id: "midnight_dance",
         title: "Midnight Dance",
-        description: "Get +4 firepower from a secret move. Jump 4 times in a row over 4 different pieces, then fire the boosted shot.",
+        description: "Get +4 firepower from a secret move. Jump 4 times in a row.",
         progress: 0,
         maxProgress: 1,
         completed: false,
@@ -1053,7 +1053,7 @@ export const achievements = [
     {
         id: "new_job",
         title: "New Job",
-        description: "Be disguised as pawn when 4 Horsemen spawn. Kill White King while disguised using non-revealing methods (blade, grenade, silencer). Multiple Low-Cost Disguise copies recommended. Conscription helps maintain disguises.",
+        description: "Be disguised as pawn when 4 Horsemen spawn. Kill White King while disguised. Use the Silencer card to hide the shot.",
         progress: 0,
         maxProgress: 1,
         completed: false,
