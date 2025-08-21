@@ -14,7 +14,7 @@ export const allCards = [
     "Indelible Memories", "Monarch's Confidence", "Tearing Bullets", "The Mole", "Fearsome",
     "Human Shield", "Reign of Terror", "Ancient Flagstone", "Patience", "Bold Plan",
     "Low-Cost Disguise", "Silencer", "Holoking", "Cloaking Device", "Ambush", "Selective Listening",
-    "Secret Move", "Workshop", "Seer's Orb","Mystic Shackles","Elusive","Taunting Hop",
+    "Secret Move", "Workshop", "Seer's Orb","Mystic Shackles","Elusive","Taunting Hop","Egotic Maelstrom",
     
     // White Cards
     "Ammunition Depot", "Ascension", "Assault", "Backups", "Bodyguard", "Cardinal", "Castle",
@@ -194,6 +194,7 @@ export function getLocalImagePath(cardName) {
         "Elusive": "Elusive.jpg",
         "Taunting Hop": "Taunting_Hop.png",
         "Fallen Dynasty": "Fallen_Dynasty.png",
+        "Egotic Maelstrom": "Egotic_Maelstrom.png",
     };
     
     const imageName = imageMap[cardName];
