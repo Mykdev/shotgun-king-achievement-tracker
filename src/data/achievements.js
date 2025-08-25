@@ -876,11 +876,11 @@ export const achievements = [
     {
         id: "hidden_conspirator",
         title: "Hidden Conspirator",
-        description: "Win with The Mole, Low-Cost Disguise and King's Look-alike",
+        description: "Win with The Mole, Low-Cost Disguise and King's Look-Alike",
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["The Mole", "Low-Cost Disguise", "King's Look-alike"],
+        requiredCards: ["The Mole", "Low-Cost Disguise", "King's Look-Alike"],
         difficulty: "Medium"
     },
     {
@@ -1023,11 +1023,11 @@ export const achievements = [
     {
         id: "anarchy",
         title: "Anarchy",
-        description: "Have 4+ Kings on the board at one time. Use 3x King's Look-alike OR 1 Secret Heir, 1 King's Look-alike + Unsettled Throne.",
+        description: "Have 4+ Kings on the board at one time. Use 3x King's Look-Alike OR 1 Secret Heir, 1 King's Look-Alike + Unsettled Throne.",
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["King's Look-alike", "The Secret Heir", "Unsettled Throne"],
+        requiredCards: ["King's Look-Alike", "The Secret Heir", "Unsettled Throne"],
         difficulty: "Hard"
     },
     {

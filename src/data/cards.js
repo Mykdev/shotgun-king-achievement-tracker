@@ -750,7 +750,7 @@ export const cardDetails = {
         image: getLocalImagePath("Kite Shield"),
         description: "Add 1 Pawn Knights have a shield that absorb every damage on a single turn",
         maxAmount: 1,
-        requirements: ""
+        requirements: "Has 2 Knights or more at the start of floor"
     },
     "Lookout Tower": {
         image: getLocalImagePath("Lookout Tower"),

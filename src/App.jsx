@@ -260,14 +260,36 @@ function App() {
       const incompleteAchievements = achievementData.filter(a => !a.completed);
       const neededCards = new Set();
       
+      // Function to recursively add a card and all its prerequisites
+      // This ensures we show not just cards required by achievements, but also
+      // the cards needed to unlock those required cards (e.g., Golden Aging for Presbyopia)
+      const addCardAndPrerequisites = (cardName, visited = new Set()) => {
+        if (neededCards.has(cardName)) return; // Already added
+        if (visited.has(cardName)) return; // Prevent circular dependencies
+        
+        visited.add(cardName);
+        neededCards.add(cardName);
+        
+        // Get prerequisites for this card
+        const prerequisites = getCardPrerequisites(cardName);
+        prerequisites.forEach(prereq => {
+          addCardAndPrerequisites(prereq, new Set(visited));
+        });
+      };
+      
       incompleteAchievements.forEach(achievement => {
         // Only process achievements that have requiredCards property
         if (achievement.requiredCards && Array.isArray(achievement.requiredCards)) {
           achievement.requiredCards.forEach(card => {
-            neededCards.add(card);
+            addCardAndPrerequisites(card);
           });
         }
       });
+      
+      // Debug logging to verify the recursive logic is working
+      if (import.meta.env.DEV) {
+        console.log('🔍 Cards needed for incomplete achievements (including prerequisites):', Array.from(neededCards));
+      }
       
       filteredCards = filteredCards.filter(card => neededCards.has(card));
     }
