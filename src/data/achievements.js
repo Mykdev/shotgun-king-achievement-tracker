@@ -1003,11 +1003,11 @@ export const achievements = [
     {
         id: "hippocracy",
         title: "Hippocracy",
-        description: "Disable King's Look-Alike with sabotage card (Undercover Mission/The Mole) before revealing the Usurper. Damage remaining king to reveal Usurper, letting knights rule.",
+        description: "Disable King's Look-alike with sabotage card (Undercover Mission/The Mole) before revealing the Usurper. Damage remaining king to reveal Usurper, letting knights rule.",
         progress: 0,
         maxProgress: 1,
         completed: false,
-        requiredCards: ["King's Look-Alike", "Undercover Mission", "The Mole"],
+        requiredCards: ["King's Look-alike", "Undercover Mission", "The Mole"],
         difficulty: "Hard"
     },
     {

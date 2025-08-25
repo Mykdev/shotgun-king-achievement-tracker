@@ -27,7 +27,7 @@ export const allCards = [
     "Divine Healing", "Last Guardian", "Trowel", "Full Plate Armor", "Military Academy",
     "Witch's Curse", "Saddle", "The Jester", "Guillotine", "Analysis Paralysis", "Mausoleum",
     "Final Countdown", "Mangonel", "Prison", "The Royal Hunt", "Buckler of Limos",
-    "King's Look-Alike", "Emergency Call", "Lady in the Tower", "Vampirism", "Inquisition",
+    "King's Look-alike", "Emergency Call", "Lady in the Tower", "Vampirism", "Inquisition",
     "Tag Team", "Unsettled Throne", "Nomad Life", "Governess", "Unicorn", "Plumed Knight",
     "Reverend Mother", "Commoner's Reign", "Self Defense", "Bouncy Castle", "Sokoban",
     "Fallen Dynasty"
