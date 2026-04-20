@@ -8,6 +8,7 @@ import {
   isCardAvailable,
   getCardPrerequisites,
   getCardRequirementOptions,
+  getRelevantCardRequirementOptions,
   getOtherRequirements,
   getMinimalPrerequisiteCards
 } from './data/cards';
@@ -271,8 +272,9 @@ function App() {
       const incompleteAchievements = achievementData.filter(a => !a.completed);
       const neededCards = new Set();
       
-      // Show every immediate prerequisite option for a card, but only recurse
-      // down one shortest branch so the list stays concise.
+      // Follow the currently relevant unlock path:
+      // - if a card is already unlocked, keep only the satisfied prerequisite branch
+      // - if it is still locked, show all of its unlock options and recurse into them
       const addCardAndPrerequisites = (cardName, visited = new Set()) => {
         if (neededCards.has(cardName)) return; // Already added
         if (visited.has(cardName)) return; // Prevent circular dependencies
@@ -280,18 +282,12 @@ function App() {
         visited.add(cardName);
         neededCards.add(cardName);
 
-        const requirementOptions = getCardRequirementOptions(cardName);
-        const immediateOptions = requirementOptions.flat();
+        const relevantRequirementOptions = getRelevantCardRequirementOptions(cardName, selectedCards);
 
-        immediateOptions.forEach(prereq => {
-          neededCards.add(prereq);
-        });
-
-        const recursiveBranch = getMinimalPrerequisiteCards(cardName, selectedCards)
-          .filter(prereq => immediateOptions.includes(prereq));
-
-        recursiveBranch.forEach(prereq => {
-          addCardAndPrerequisites(prereq, new Set(visited));
+        relevantRequirementOptions.forEach(option => {
+          option.forEach(prereq => {
+            addCardAndPrerequisites(prereq, new Set(visited));
+          });
         });
       };
       
@@ -323,6 +319,7 @@ function App() {
     return filteredCards.map(card => ({
       name: card,
       isAvailable: isCardAvailable(card, selectedCards),
+      prerequisiteOptions: getCardRequirementOptions(card),
       prerequisites: getCardPrerequisites(card),
       otherRequirements: getOtherRequirements(card)
     }));

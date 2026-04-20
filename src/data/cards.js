@@ -1400,6 +1400,24 @@ export function getCardRequirementOptions(cardName) {
     return parseCardRequirementOptions(card.requirements);
 }
 
+function isRequirementOptionSatisfied(option, selectedCards) {
+    const selectedSet = new Set(selectedCards.map(resolveCardName));
+    return option.every((prereq) => selectedSet.has(resolveCardName(prereq)));
+}
+
+export function getRelevantCardRequirementOptions(cardName, selectedCards = []) {
+    const requirementOptions = getCardRequirementOptions(cardName);
+    if (requirementOptions.length === 0) {
+        return [];
+    }
+
+    const satisfiedOptions = requirementOptions.filter((option) =>
+        isRequirementOptionSatisfied(option, selectedCards)
+    );
+
+    return satisfiedOptions.length > 0 ? satisfiedOptions : requirementOptions;
+}
+
 export function getMinimalPrerequisiteCards(cardName, selectedCards = [], visited = new Set()) {
     const resolvedCardName = resolveCardName(cardName);
 
@@ -1473,16 +1491,14 @@ export function getOtherRequirements(cardName) {
 
 // Function to check if a card is available (prerequisites met)
 export function isCardAvailable(cardName, selectedCards) {
-    const prerequisites = getCardPrerequisites(cardName);
-    const resolvedSelectedCards = selectedCards.map(resolveCardName);
-    
-    if (prerequisites.length === 0) {
+    const requirementOptions = getCardRequirementOptions(cardName);
+
+    if (requirementOptions.length === 0) {
         return true; // No prerequisites, always available
     }
-    
-    // Check if any prerequisites are met (OR logic)
-    // This handles cases like "Undercover Mission or The Mole" - either one satisfies the requirement
-    return prerequisites.some(prereq => resolvedSelectedCards.includes(resolveCardName(prereq)));
+
+    // A card is available when any requirement option is fully satisfied.
+    return requirementOptions.some((option) => isRequirementOptionSatisfied(option, selectedCards));
 }
 
 // Function to get all cards that are currently locked (prerequisites not met)

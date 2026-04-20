@@ -22,6 +22,11 @@ function CardItem({
   };
 
   const displayName = selectedCount > 1 ? `${cardName} (${selectedCount})` : cardName;
+  const prerequisiteOptions = cardData.prerequisiteOptions || [];
+  const hasCardPrerequisites = prerequisiteOptions.length > 0;
+  const formattedPrerequisites = prerequisiteOptions
+    .map((option) => option.join(' AND '))
+    .join(' OR ');
 
   return (
     <div
@@ -51,16 +56,12 @@ function CardItem({
           <div className="card-max">Max: {details.maxAmount}</div>
         )}
                  {/* Show prerequisites if card is locked */}
-         {!cardData.isAvailable && cardData.prerequisites && cardData.prerequisites.length > 0 && (
+        {!cardData.isAvailable && hasCardPrerequisites && (
            <div className="card-prerequisites">
              <span className="prerequisites-label">
-               {cardData.prerequisites.length > 1 ? 'Needs (any):' : 'Needs:'}
+               {prerequisiteOptions.length > 1 ? 'Needs (any):' : 'Needs:'}
              </span>
-             {cardData.prerequisites.map((prereq, index) => (
-               <span key={prereq} className="prerequisite-card">
-                 {prereq}{index < cardData.prerequisites.length - 1 ? ' OR ' : ''}
-               </span>
-             ))}
+             <span className="prerequisite-card">{formattedPrerequisites}</span>
            </div>
          )}
         {/* Show other requirements */}
