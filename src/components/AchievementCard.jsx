@@ -1,7 +1,9 @@
 import React from 'react';
+import { formatAchievementRequirements } from '../data/achievementRequirements';
 
 function AchievementCard({ achievement, onToggleProgress, animationDelay }) {
   const progressPercentage = (achievement.progress / achievement.maxProgress) * 100;
+  const requirementText = formatAchievementRequirements(achievement);
 
   const handleClick = () => {
     onToggleProgress(achievement.id);
@@ -27,14 +29,10 @@ function AchievementCard({ achievement, onToggleProgress, animationDelay }) {
           {achievement.progress}/{achievement.maxProgress}
         </div>
       </div>
-      {achievement.requiredCards && (
+      {requirementText && (
         <div className="achievement-cards">
           <span className="card-tag required">Required Cards:</span>
-          {achievement.requiredCards.map((card, index) => (
-            <span key={index} className="card-tag">
-              {card}
-            </span>
-          ))}
+          <span className="card-tag">{requirementText}</span>
         </div>
       )}
     </div>

@@ -15,6 +15,9 @@ export const allCards = [
     "Human Shield", "Reign of Terror", "Ancient Flagstone", "Patience", "Bold Plan",
     "Low-Cost Disguise", "Silencer", "Holoking", "Cloaking Device", "Ambush", "Selective Listening",
     "Secret Move", "Workshop", "Seer's Orb","Mystic Shackles","Elusive","Taunting Hop","Egotic Maelstrom",
+    "Right-hand", "Warhorse", "Bastion", "Sprint", "Soul Projection", "Onboarding Party",
+    "Small Key", "Rapunzel", "Wand of Treachery", "Guerilla Tactics", "Shovel", "Grindstone",
+    "Death Mark", "Shrapnel",
     
     // White Cards
     "Ammunition Depot", "Ascension", "Assault", "Backups", "Bodyguard", "Cardinal", "Castle",
@@ -30,13 +33,29 @@ export const allCards = [
     "King's Look-Alike", "Emergency Call", "Lady in the Tower", "Vampirism", "Inquisition",
     "Tag Team", "Unsettled Throne", "Nomad Life", "Governess", "Unicorn", "Plumed Knight",
     "Reverend Mother", "Commoner's Reign", "Self Defense", "Bouncy Castle", "Sokoban",
-    "Fallen Dynasty"
+    "Fallen Dynasty", "Overthrown Theocracy", "Latecomer", "Vendetta", "Stoning", "Anarchy",
+    "Auto-da-fe", "Late for Dinner", "Excommunication", "Pyre of Lust", "Gatehouse",
+    "Lightfoot", "Loyalist March", "Trench War", "Catacombs", "Flesh Wall", "Hired Blade",
+    "Oathkeeper", "Redemption"
 ];
 
 import { getImageBasePath, getFallbackImagePath } from '../config/env.js';
 
+export const cardNameAliases = {
+    "Faithful Steed": "Unfaithful Steed",
+    "Sawed-off Justice": "Sawed-Off Justice",
+    "Force-Feeding": "Force Feeding",
+    "King's Look-alike": "King's Look-Alike",
+    "Self-Defense": "Self Defense",
+};
+
+export function resolveCardName(cardName) {
+    return cardNameAliases[cardName] ?? cardName;
+}
+
 // Function to get local image path for a card
 export function getLocalImagePath(cardName) {
+    const resolvedCardName = resolveCardName(cardName);
     const imageMap = {
         "Ancient Flagstone": "Ancient_flagstone.png",
         "A Piercing Truth": "A_Piercing_Truth.png",
@@ -75,7 +94,7 @@ export function getLocalImagePath(cardName) {
         "Wand of Souls": "Wand_of_Souls_Image.png",
         "Wand of Execution": "Wand_of_Execution_Image.png",
         "Wand of Hypnosis": "WandofHypnosis.png",
-        "Sawed-Off Justice": "Sawed-Off_Justice.png",
+        "Sawed-Off Justice": "Sawed-off_Justice.png",
         "Welcome Gift": "Welcome-Gift.png",
         "Cannon Fodder": "Cannon-Fodder.png",
         "Philanthropy": "Philanthropy.png",
@@ -92,7 +111,7 @@ export function getLocalImagePath(cardName) {
         "Fool Companion": "FoolCompanion.png",
         "Force Feeding": "Forcefeeding.png",
         "Possessed": "Possessed.png",
-        "Imperial Shot Put": "Imperial_Shot_Put.png",
+        "Imperial Shot Put": "Imperial_Shot_Put.PNG",
         "Church Organ": "Church_Organ.jpg",
         "Black Plague": "Plague.PNG",
         "Deep Waters": "Deep_Waters.jpg",
@@ -108,7 +127,7 @@ export function getLocalImagePath(cardName) {
         "Low-Cost Disguise": "Low_Cost_Disguise.jpg",
         "Silencer": "Silencer.jpg",
         "Holoking": "Holo-King.jpg",
-        "Cloaking Device": "Cloaking_Device.png",
+        "Cloaking Device": "Cloaking_Device.PNG",
         "Ambush": "Ambush.png",
         "Selective Listening": "Selective_Listening.jpg",
         "Secret Move": "Secret_move.png",
@@ -173,12 +192,12 @@ export function getLocalImagePath(cardName) {
         "Mangonel": "Mangonel_.jpg",
         "Prison": "Prison.png",
         "The Royal Hunt": "The_Royal_Hunt.jpg",
-        "Buckler of Limos": "Buckler_of_Limos.png",
-        "King's Look-Alike": "King__27s_Look-Alike.png",
+        "Buckler of Limos": "Buckler_of_limos.png",
+        "King's Look-Alike": "King__27s_Look-Alike.PNG",
         "Emergency Call": "Emergency_Call.jpg",
-        "Lady in the Tower": "Lady_in_the_Tower.png",
-        "Vampirism": "Vampirism.png",
-        "Inquisition": "Inquisition.png",
+        "Lady in the Tower": "Lady_in_the_Tower.PNG",
+        "Vampirism": "Vampirism.PNG",
+        "Inquisition": "Inquisition.PNG",
         "Tag Team": "Tag_Team.jpg",
         "Unsettled Throne": "Unsettled_throne.png",
         "Nomad Life": "Nomad_Life.jpg",
@@ -186,18 +205,47 @@ export function getLocalImagePath(cardName) {
         "Unicorn": "Unicorn.jpg",
         "Plumed Knight": "Plumed_Knight.jpg",
         "Reverend Mother": "Reverend_mother.png",
-        "Commoner's Reign": "Commoner__27s_Reign.png",
+        "Commoner's Reign": "Commoner__27s_Reign.PNG",
         "Self Defense": "Image_missing.png",//missing
         "Bouncy Castle": "Bouncy_castle.png",
-        "Sokoban": "Sokoban.png",
-        "Mystic Shackles": "Mystic_Shackles.png",
+        "Sokoban": "Sokoban.PNG",
+        "Mystic Shackles": "Mystic_shackles.png",
         "Elusive": "Elusive.jpg",
         "Taunting Hop": "Taunting_Hop.png",
         "Fallen Dynasty": "Fallen_Dynasty.png",
-        "Egotic Maelstrom": "Egotic_Maelstrom.png",
+        "Egotic Maelstrom": "Egotic_Maelstrom.PNG",
+        "Right-hand": "righthand.png",
+        "Warhorse": "warhorse.png",
+        "Sprint": "sprint.png",
+        "Soul Projection": "soulprojection.png",
+        "Onboarding Party": "onboardingparty.png",
+        "Small Key": "smallkey.png",
+        "Rapunzel": "rapunzel.png",
+        "Wand of Treachery": "wandoftreachery.png",
+        "Guerilla Tactics": "guerillatactics.png",
+        "Shovel": "shovel.png",
+        "Grindstone": "grindstone.png",
+        "Death Mark": "deathmark.png",
+        "Shrapnel": "shrapnel.png",
+        "Vendetta": "vendetta.png",
+        "Stoning": "stoning.png",
+        "Anarchy": "anarchy.png",
+        "Auto-da-fe": "autodafe.png",
+        "Excommunication": "excommunication.png",
+        "Pyre of Lust": "pyreoflust.png",
+        "Gatehouse": "gatehouse.png",
+        "Lightfoot": "lightfoot.png",
+        "Loyalist March": "loyalistmarch.png",
+        "Trench War": "trenchwar.png",
+        "Catacombs": "catacombs.png",
+        "Flesh Wall": "fleshwall.png",
+        "Hired Blade": "hiredBlade.png",
+        "Oathkeeper": "oathkeeper.png",
+        "Redemption": "redemption.png",
+        "Self Defense": "selfdefence.png",
     };
     
-    const imageName = imageMap[cardName];
+    const imageName = imageMap[resolvedCardName];
     if (imageName) {
         // Use environment-aware base path
         const imagePath = getImageBasePath() + imageName;
@@ -221,7 +269,103 @@ export function getLocalImagePath(cardName) {
     return fallbackPath;
 }
 
+function createPlaceholderCard(cardName, colorGroup) {
+    return {
+        image: getLocalImagePath(cardName),
+        description: `New ${colorGroup} card found in the game language file. Exact effect mapping is still pending.`,
+        maxAmount: 1,
+        requirements: ""
+    };
+}
+
 export const cardDetails = {
+    "Right-hand": {
+        image: getLocalImagePath("Right-hand"),
+        description: "Add 1 black bishop",
+        maxAmount: 1,
+        requirements: "The Red Book or Possessed or Gradual Absolution"
+    },
+    "Warhorse": {
+        image: getLocalImagePath("Warhorse"),
+        description: "Add 1 black knight",
+        maxAmount: 1,
+        requirements: "Saddle or Cavalry or Knightmare"
+    },
+    "Bastion": {
+        image: getLocalImagePath("Bastion"),
+        description: "Add 1 black rook",
+        maxAmount: 1,
+        requirements: "Lookout Tower or Highest Dungeon or Bunker"
+    },
+    "Sprint": createPlaceholderCard("Sprint", "black"),
+    "Soul Projection": {
+        image: getLocalImagePath("Soul Projection"),
+        description: "If you have no ally, you can spend a soul to create an ally",
+        maxAmount: 1,
+        requirements: "Undead Armies or Knightmare"
+    },
+    "Onboarding Party": createPlaceholderCard("Onboarding Party", "black"),
+    "Small Key": {
+        image: getLocalImagePath("Small Key"),
+        description: "Once per floor click a nearby Rook to remove it or a nearby jailed piece to convert it, then disrupt the White Army",
+        maxAmount: 1,
+        requirements: "Trowel or Prison"
+    },
+    "Rapunzel": createPlaceholderCard("Rapunzel", "black"),
+    "Wand of Treachery": {
+        image: getLocalImagePath("Wand of Treachery"),
+        description: "Convert a piece orthogonally adjacent to your king",
+        maxAmount: 1,
+        requirements: ""
+    },
+    "Guerilla Tactics": createPlaceholderCard("Guerilla Tactics", "black"),
+    "Shovel": createPlaceholderCard("Shovel", "black"),
+    "Grindstone": createPlaceholderCard("Grindstone", "black"),
+    "Death Mark": {
+        image: getLocalImagePath("Death Mark"),
+        description: "Pellets mark pieces on hit. Marked pieces take 1 damage when you reload",
+        maxAmount: 2,
+        requirements: ""
+    },
+    "Shrapnel": createPlaceholderCard("Shrapnel", "black"),
+    "Overthrown Theocracy": createPlaceholderCard("Overthrown Theocracy", "white"),
+    "Latecomer": createPlaceholderCard("Latecomer", "white"),
+    "Vendetta": createPlaceholderCard("Vendetta", "white"),
+    "Stoning": createPlaceholderCard("Stoning", "white"),
+    "Anarchy": createPlaceholderCard("Anarchy", "white"),
+    "Auto-da-fe": {
+        image: getLocalImagePath("Auto-da-fe"),
+        description: "When a bishop threatens you, either mark a random black card or flip all marked cards",
+        maxAmount: 1,
+        requirements: "Inquisition or Conclave or Zealots"
+    },
+    "Late for Dinner": createPlaceholderCard("Late for Dinner", "white"),
+    "Excommunication": createPlaceholderCard("Excommunication", "white"),
+    "Pyre of Lust": createPlaceholderCard("Pyre of Lust", "white"),
+    "Gatehouse": {
+        image: getLocalImagePath("Gatehouse"),
+        description: "Rooks can create knights instead of moving",
+        maxAmount: 1,
+        requirements: "Remparts or Trowel"
+    },
+    "Lightfoot": createPlaceholderCard("Lightfoot", "white"),
+    "Loyalist March": createPlaceholderCard("Loyalist March", "white"),
+    "Trench War": createPlaceholderCard("Trench War", "white"),
+    "Catacombs": createPlaceholderCard("Catacombs", "white"),
+    "Flesh Wall": createPlaceholderCard("Flesh Wall", "white"),
+    "Hired Blade": {
+        image: getLocalImagePath("Hired Blade"),
+        description: "Add 1 slayer",
+        maxAmount: 1,
+        requirements: ""
+    },
+    "Oathkeeper": {
+        image: getLocalImagePath("Oathkeeper"),
+        description: "Add 1 warden",
+        maxAmount: 1,
+        requirements: ""
+    },
+    "Redemption": createPlaceholderCard("Redemption", "white"),
     "Fallen Dynasty": {
         image: getLocalImagePath("Fallen Dynasty"),
         description: "They ruled a long time ago... But royalty shall prevail",
@@ -1212,18 +1356,115 @@ export function parseCardRequirements(requirementsString) {
     return { cardPrerequisites, otherRequirements };
 }
 
+// Parse requirements into OR groups so the UI can choose a minimal unlock path.
+// Examples:
+// - "A or B or C" => [[A], [B], [C]]
+// - "A, B" => [[A, B]]
+// - "A, B, or C" => [[A], [B], [C]]
+export function parseCardRequirementOptions(requirementsString) {
+    if (!requirementsString || requirementsString.trim() === "") {
+        return [];
+    }
+
+    const trimmed = requirementsString.trim();
+    const hasOr = /\s+or\s+/i.test(trimmed);
+    const hasAnd = /[,;]|\s+and\s+/i.test(trimmed);
+
+    if (!hasOr && !hasAnd) {
+        return allCards.includes(trimmed) ? [[trimmed]] : [];
+    }
+
+    // Heuristic: if the string contains "or" but no explicit "and",
+    // treat comma-separated cards as alternative options, not cumulative requirements.
+    if (hasOr && !/\s+and\s+/i.test(trimmed)) {
+        return trimmed
+            .split(/\s+or\s+/i)
+            .flatMap((part) => part.split(/[,;]/))
+            .map((part) => part.trim())
+            .filter((part) => allCards.includes(part))
+            .map((part) => [part]);
+    }
+
+    const andGroup = trimmed
+        .split(/[,;]|\s+and\s+/i)
+        .map((part) => part.trim())
+        .filter((part) => allCards.includes(part));
+
+    return andGroup.length > 0 ? [andGroup] : [];
+}
+
+export function getCardRequirementOptions(cardName) {
+    const card = cardDetails[resolveCardName(cardName)];
+    if (!card || !card.requirements) return [];
+
+    return parseCardRequirementOptions(card.requirements);
+}
+
+export function getMinimalPrerequisiteCards(cardName, selectedCards = [], visited = new Set()) {
+    const resolvedCardName = resolveCardName(cardName);
+
+    if (visited.has(resolvedCardName)) {
+        return [];
+    }
+
+    const requirementOptions = getCardRequirementOptions(resolvedCardName);
+    if (requirementOptions.length === 0) {
+        return [];
+    }
+
+    const selectedSet = new Set(selectedCards.map(resolveCardName));
+    const nextVisited = new Set(visited);
+    nextVisited.add(resolvedCardName);
+
+    const scoredOptions = requirementOptions.map((option) => {
+        const cardsNeeded = new Set();
+
+        option.forEach((prereq) => {
+            const resolvedPrereq = resolveCardName(prereq);
+            cardsNeeded.add(resolvedPrereq);
+
+            if (!selectedSet.has(resolvedPrereq)) {
+                getMinimalPrerequisiteCards(resolvedPrereq, selectedCards, nextVisited).forEach(
+                    (nestedCard) => cardsNeeded.add(nestedCard)
+                );
+            }
+        });
+
+        const missingCount = Array.from(cardsNeeded).filter((name) => !selectedSet.has(name)).length;
+        return {
+            cards: Array.from(cardsNeeded),
+            missingCount,
+        };
+    });
+
+    scoredOptions.sort((left, right) => {
+        if (left.missingCount !== right.missingCount) {
+            return left.missingCount - right.missingCount;
+        }
+
+        return left.cards.length - right.cards.length;
+    });
+
+    return scoredOptions[0]?.cards ?? [];
+}
+
 // Function to get all card prerequisites for a given card
 export function getCardPrerequisites(cardName) {
-    const card = cardDetails[cardName];
+    const options = getCardRequirementOptions(cardName);
+    if (options.length > 0) {
+        return options.flat();
+    }
+
+    const card = cardDetails[resolveCardName(cardName)];
     if (!card || !card.requirements) return [];
-    
+
     const { cardPrerequisites } = parseCardRequirements(card.requirements);
     return cardPrerequisites;
 }
 
 // Function to get all other requirements for a given card
 export function getOtherRequirements(cardName) {
-    const card = cardDetails[cardName];
+    const card = cardDetails[resolveCardName(cardName)];
     if (!card || !card.requirements) return [];
     
     const { otherRequirements } = parseCardRequirements(card.requirements);
@@ -1233,6 +1474,7 @@ export function getOtherRequirements(cardName) {
 // Function to check if a card is available (prerequisites met)
 export function isCardAvailable(cardName, selectedCards) {
     const prerequisites = getCardPrerequisites(cardName);
+    const resolvedSelectedCards = selectedCards.map(resolveCardName);
     
     if (prerequisites.length === 0) {
         return true; // No prerequisites, always available
@@ -1240,7 +1482,7 @@ export function isCardAvailable(cardName, selectedCards) {
     
     // Check if any prerequisites are met (OR logic)
     // This handles cases like "Undercover Mission or The Mole" - either one satisfies the requirement
-    return prerequisites.some(prereq => selectedCards.includes(prereq));
+    return prerequisites.some(prereq => resolvedSelectedCards.includes(resolveCardName(prereq)));
 }
 
 // Function to get all cards that are currently locked (prerequisites not met)

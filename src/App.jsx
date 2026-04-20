@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { achievements } from './data/achievements';
-import { allCards, getLocalImagePath, cardDetails, isCardAvailable, getCardPrerequisites, getOtherRequirements } from './data/cards';
+import { getAchievementReferencedCards } from './data/achievementRequirements';
+import {
+  allCards,
+  getLocalImagePath,
+  cardDetails,
+  isCardAvailable,
+  getCardPrerequisites,
+  getOtherRequirements,
+  getMinimalPrerequisiteCards
+} from './data/cards';
 import Header from './components/Header';
 import StatsBar from './components/StatsBar';
 import CardSelection from './components/CardSelection';
@@ -130,10 +139,11 @@ function App() {
   const getQualifyingAchievements = () => {
     return achievementData.filter(achievement => {
       if (achievement.completed) return false;
-      
-      if (achievement.requiredCards && achievement.requiredCards.length > 0) {
+
+      const referencedCards = getAchievementReferencedCards(achievement);
+      if (referencedCards.length > 0) {
         // Only qualify if at least one required card is actually selected
-        return achievement.requiredCards.some(card => selectedCards.includes(card));
+        return referencedCards.some(card => selectedCards.includes(card));
       }
       return false;
     });
@@ -151,13 +161,13 @@ function App() {
     
     // Check each qualifying achievement for missing cards
     qualifyingAchievements.forEach(achievement => {
-      // Extra safety check - qualifying achievements should have requiredCards, but just in case
-      if (!achievement.requiredCards || !Array.isArray(achievement.requiredCards)) {
+      const referencedCards = getAchievementReferencedCards(achievement);
+      if (referencedCards.length === 0) {
         return;
       }
       
       const requiredCardCounts = {};
-      achievement.requiredCards.forEach(card => {
+      referencedCards.forEach(card => {
         requiredCardCounts[card] = (requiredCardCounts[card] || 0) + 1;
       });
       
@@ -188,15 +198,14 @@ function App() {
     }
     
     qualifyingAchievements.forEach(achievement => {
-      // Extra safety check - qualifying achievements should have requiredCards, but just in case
-      if (!achievement.requiredCards || !Array.isArray(achievement.requiredCards)) {
+      const referencedCards = getAchievementReferencedCards(achievement);
+      if (referencedCards.length === 0) {
         return;
       }
       
-      achievement.requiredCards.forEach(card => {
+      referencedCards.forEach(card => {
         if (!selectedCards.includes(card) && !isCardAvailable(card, selectedCards)) {
-          // Get all prerequisites for this card
-          const prerequisites = getCardPrerequisites(card);
+          const prerequisites = getMinimalPrerequisiteCards(card, selectedCards);
           prerequisites.forEach(prereq => {
             if (!selectedCards.includes(prereq)) {
               prerequisiteCards.add(prereq);
@@ -216,10 +225,11 @@ function App() {
     // Check each achievement to see if it just became available
     achievementData.forEach(achievement => {
       if (achievement.completed) return;
-      
-      if (achievement.requiredCards && achievement.requiredCards.length > 0) {
+
+      const referencedCards = getAchievementReferencedCards(achievement);
+      if (referencedCards.length > 0) {
         // Check if this achievement just became available due to newly selected cards
-        const hasNewlyAvailableCards = achievement.requiredCards.some(card => {
+        const hasNewlyAvailableCards = referencedCards.some(card => {
           // Card is newly available if it wasn't available before but is now
           const isNowAvailable = isCardAvailable(card, selectedCards);
           const wasAvailableBefore = isCardAvailable(card, selectedCards.slice(0, -1)); // Check without the last selected card
@@ -260,9 +270,7 @@ function App() {
       const incompleteAchievements = achievementData.filter(a => !a.completed);
       const neededCards = new Set();
       
-      // Function to recursively add a card and all its prerequisites
-      // This ensures we show not just cards required by achievements, but also
-      // the cards needed to unlock those required cards (e.g., Golden Aging for Presbyopia)
+      // Recursively add a card and the smallest prerequisite path needed to unlock it.
       const addCardAndPrerequisites = (cardName, visited = new Set()) => {
         if (neededCards.has(cardName)) return; // Already added
         if (visited.has(cardName)) return; // Prevent circular dependencies
@@ -270,17 +278,16 @@ function App() {
         visited.add(cardName);
         neededCards.add(cardName);
         
-        // Get prerequisites for this card
-        const prerequisites = getCardPrerequisites(cardName);
+        const prerequisites = getMinimalPrerequisiteCards(cardName, selectedCards);
         prerequisites.forEach(prereq => {
           addCardAndPrerequisites(prereq, new Set(visited));
         });
       };
       
       incompleteAchievements.forEach(achievement => {
-        // Only process achievements that have requiredCards property
-        if (achievement.requiredCards && Array.isArray(achievement.requiredCards)) {
-          achievement.requiredCards.forEach(card => {
+        const referencedCards = getAchievementReferencedCards(achievement);
+        if (referencedCards.length > 0) {
+          referencedCards.forEach(card => {
             addCardAndPrerequisites(card);
           });
         }
