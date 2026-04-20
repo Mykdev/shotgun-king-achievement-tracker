@@ -2,6 +2,7 @@ import React from 'react';
 import CardItem from './CardItem';
 import QualifyingAchievements from './QualifyingAchievements';
 import MissingCardsSummary from './MissingCardsSummary';
+import { formatAchievementRequirements } from '../data/achievementRequirements';
 
 function CardSelection({
   selectedCards,
@@ -163,20 +164,9 @@ function CardSelection({
                    <p>{achievement.description}</p>
                    <div className="achievement-requirements">
                      <span className="requirements-label">Required Cards:</span>
-                     {achievement.requiredCards.map((card, index) => (
-                                               <span 
-                          key={card} 
-                          className={`required-card clickable-card ${selectedCards.includes(card) ? 'selected' : ''}`}
-                          onClick={() => onToggleCard(card)}
-                          onContextMenu={(e) => {
-                            e.preventDefault();
-                            onRemoveCard(card);
-                          }}
-                          title={`Click to select ${card}, right-click to deselect`}
-                        >
-                          {card}{index < achievement.requiredCards.length - 1 ? ', ' : ''}
-                        </span>
-                     ))}
+                     <span className="required-card">
+                       {formatAchievementRequirements(achievement)}
+                     </span>
                    </div>
                  </div>
                </div>

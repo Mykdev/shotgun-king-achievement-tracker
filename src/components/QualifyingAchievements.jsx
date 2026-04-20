@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getFallbackImagePath } from '../config/env.js';
+import { formatAchievementRequirements, getAchievementReferencedCards } from '../data/achievementRequirements';
 
 function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDetails, getLocalImagePath, onCardSelect, onCardDeselect }) {
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -54,7 +55,8 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDet
   }
 
   const getCardStatus = (achievement, cardName) => {
-    const requiredCount = achievement.requiredCards.filter(card => card === cardName).length;
+    const referencedCards = getAchievementReferencedCards(achievement);
+    const requiredCount = referencedCards.filter(card => card === cardName).length;
     const selectedCount = selectedCards.filter(card => card === cardName).length;
     
     if (selectedCount >= requiredCount) {
@@ -67,8 +69,9 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDet
   };
 
   const getAchievementSummary = (achievement) => {
+    const referencedCards = getAchievementReferencedCards(achievement);
     const requiredCardCounts = {};
-    achievement.requiredCards.forEach(card => {
+    referencedCards.forEach(card => {
       requiredCardCounts[card] = (requiredCardCounts[card] || 0) + 1;
     });
     
@@ -102,7 +105,8 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDet
       <div className="qualifying-list">
         {qualifyingAchievements.map(achievement => {
           const summary = getAchievementSummary(achievement);
-          const uniqueRequiredCards = [...new Set(achievement.requiredCards)];
+          const uniqueRequiredCards = [...new Set(getAchievementReferencedCards(achievement))];
+          const requirementText = formatAchievementRequirements(achievement);
           
           return (
             <div key={achievement.id} className="qualifying-achievement">
@@ -128,6 +132,11 @@ function QualifyingAchievements({ qualifyingAchievements, selectedCards, cardDet
                </div>
               
               <div className="achievement-summary">
+                {requirementText && (
+                  <div className="summary-section">
+                    <strong>Requires:</strong> {requirementText}
+                  </div>
+                )}
                 {summary.completeCards.length > 0 && (
                   <div className="summary-section complete">
                     <strong>✓ Complete:</strong> {summary.completeCards.join(', ')}
