@@ -7,6 +7,7 @@ import {
   cardDetails,
   isCardAvailable,
   getCardPrerequisites,
+  getCardRequirementOptions,
   getOtherRequirements,
   getMinimalPrerequisiteCards
 } from './data/cards';
@@ -270,16 +271,26 @@ function App() {
       const incompleteAchievements = achievementData.filter(a => !a.completed);
       const neededCards = new Set();
       
-      // Recursively add a card and the smallest prerequisite path needed to unlock it.
+      // Show every immediate prerequisite option for a card, but only recurse
+      // down one shortest branch so the list stays concise.
       const addCardAndPrerequisites = (cardName, visited = new Set()) => {
         if (neededCards.has(cardName)) return; // Already added
         if (visited.has(cardName)) return; // Prevent circular dependencies
         
         visited.add(cardName);
         neededCards.add(cardName);
-        
-        const prerequisites = getMinimalPrerequisiteCards(cardName, selectedCards);
-        prerequisites.forEach(prereq => {
+
+        const requirementOptions = getCardRequirementOptions(cardName);
+        const immediateOptions = requirementOptions.flat();
+
+        immediateOptions.forEach(prereq => {
+          neededCards.add(prereq);
+        });
+
+        const recursiveBranch = getMinimalPrerequisiteCards(cardName, selectedCards)
+          .filter(prereq => immediateOptions.includes(prereq));
+
+        recursiveBranch.forEach(prereq => {
           addCardAndPrerequisites(prereq, new Set(visited));
         });
       };
